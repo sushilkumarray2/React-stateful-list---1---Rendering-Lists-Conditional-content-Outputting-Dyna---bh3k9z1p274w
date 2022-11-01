@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import '../styles/App.css';
 
@@ -27,10 +27,47 @@ const data = {
   ]
 }
 const App = () => {
+   
+  const[year, setYear] = useState('')
+  const[div, setDiv] = useState('No year selected')
+  const [list, setList] = useState([])
+  
+  const handleMovieList = (e) => {
+    let val = e.target.value;
+    // if(val=== null) {
+    //   console.log(val)
+    //   setDiv('No year selected')
+    //  }
+    // else{
+    //   console.log(val)
+      setYear(e.target.value)
+    setDiv(`Selected year-${val}`)
+    setList(data[val])
+   
+  }
 
   return (
     <div id="main">
-      
+        <select value={year} onChange={(e) => handleMovieList(e)}>
+          <option value={null} selected={true}></option>
+          {
+            Object.keys(data).map((year) => {
+              return (
+                 <option key={year}>{year}</option>
+              )
+            })
+          }
+        </select>
+        <div id='selected-year'>{div}</div>
+        <ul>
+            {
+              list.map((movies) => {
+                return (
+                  <li key={movies}>{movies}</li>
+                )
+              })
+            }
+        </ul>
     </div>
   )
 }
